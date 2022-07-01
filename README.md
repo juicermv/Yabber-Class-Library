@@ -12,6 +12,9 @@ Please see the included readme for detailed instructions.
 *katalash* - GPARAM support  
 *TKGP* - Everything else
 
+### 1.0
+* Forked Yabber to turn it into a class library for unpacking stuff in code.  
+
 # Changelog
 ### 1.3.1
 * DS2 .fltparams are now supported
