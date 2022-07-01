@@ -8,7 +8,7 @@ namespace Yabber
 {
     static class YBinder
     {
-        public static void WriteBinderFiles(BinderReader bnd, XmlWriter xw, string targetDir, IProgress<float> progress)
+        public static void WriteBinderFiles(BinderReader bnd, XmlWriter xw, string targetDir, IProgress<float> progress, bool directExtract = false, bool decompress = false)
         {
             xw.WriteStartElement("files");
             var pathCounts = new Dictionary<string, int>();
@@ -60,7 +60,14 @@ namespace Yabber
                 xw.WriteEndElement();
 
                 byte[] bytes = bnd.ReadFile(file);
-                string outPath = $@"{targetDir}\{Path.GetDirectoryName(path)}\{Path.GetFileNameWithoutExtension(path)}{suffix}{Path.GetExtension(path)}";
+                if (decompress && path.Contains(".dcx"))
+                {
+                    bytes = DCX.Decompress(bytes, out DCX.Type compression);
+                    path = path.Replace(".dcx", "");
+                }
+
+                string folderPath = directExtract ? "" : $@"{ Path.GetDirectoryName(path)}\";
+                string outPath = $@"{targetDir}\{folderPath}{Path.GetFileNameWithoutExtension(path)}{suffix}{Path.GetExtension(path)}";
                 Directory.CreateDirectory(Path.GetDirectoryName(outPath));
                 File.WriteAllBytes(outPath, bytes);
                 progress.Report((float)i / bnd.Files.Count);

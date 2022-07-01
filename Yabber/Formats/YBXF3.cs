@@ -7,12 +7,16 @@ namespace Yabber
 {
     public static class YBXF3
     {
-        public static void Unpack(this BXF3Reader bxf, string bhdName, string bdtName, string targetDir, IProgress<float> progress)
+        public static void Unpack(this BXF3Reader bxf, string bhdName, string bdtName, string targetDir, IProgress<float> progress, bool directExtract = false, bool decommpress = false, bool deleteXML = false)
         {
+
             Directory.CreateDirectory(targetDir);
+            
+         
             var xws = new XmlWriterSettings();
             xws.Indent = true;
-            var xw = XmlWriter.Create($"{targetDir}\\_yabber-bxf3.xml", xws);
+            string xmlpath = $"{targetDir}\\_yabber-bxf3.xml";
+            var xw = XmlWriter.Create(xmlpath, xws);
             xw.WriteStartElement("bxf3");
 
             xw.WriteElementString("bhd_filename", bhdName);
@@ -22,9 +26,13 @@ namespace Yabber
             xw.WriteElementString("bigendian", bxf.BigEndian.ToString());
             xw.WriteElementString("bitbigendian", bxf.BitBigEndian.ToString());
 
-            YBinder.WriteBinderFiles(bxf, xw, targetDir, progress);
+            YBinder.WriteBinderFiles(bxf, xw, targetDir, progress, directExtract, decommpress);
+
             xw.WriteEndElement();
             xw.Close();
+
+            if (deleteXML)
+                File.Delete(xmlpath);
         }
 
         public static void Repack(string sourceDir, string targetDir)
