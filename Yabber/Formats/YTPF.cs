@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace Yabber
 {
-    static class YTPF
+    public static class YTPF
     {
         public static void Unpack(this TPF tpf, string sourceName, string targetDir, IProgress<float> progress)
         {

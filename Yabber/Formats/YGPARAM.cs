@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace Yabber
 {
-    static class YGPARAM
+    public static class YGPARAM
     {
         public static void Unpack(this GPARAM gparam, string sourceFile)
         {

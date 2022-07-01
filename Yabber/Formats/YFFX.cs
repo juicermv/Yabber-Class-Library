@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Yabber
 {
-    static class YFFX
+    public static class YFFX
     {
         public static void Unpack(this FFXDLSE ffx, string sourceFile)
         {

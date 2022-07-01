@@ -3,7 +3,7 @@ using System.Xml;
 
 namespace Yabber
 {
-    static class YLUAINFO
+    public static class YLUAINFO
     {
         public static void Unpack(this LUAINFO info, string sourceFile)
         {

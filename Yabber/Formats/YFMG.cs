@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace Yabber
 {
-    static class YFMG
+    public static class YFMG
     {
         public static void Unpack(this FMG fmg, string sourceFile)
         {
