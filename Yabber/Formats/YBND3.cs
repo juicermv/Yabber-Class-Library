@@ -44,10 +44,13 @@ namespace Yabber
             string strBigEndian = xml.SelectSingleNode("bnd3/bigendian")?.InnerText ?? "False";
             string strBitBigEndian = xml.SelectSingleNode("bnd3/bitbigendian")?.InnerText ?? "False";
             string strUnk18 = xml.SelectSingleNode("bnd3/unk18")?.InnerText ?? "0x0";
-
-            if (!Enum.TryParse(strCompression, out bnd.Compression))
+            
+            DCX.Type compression;
+            if (!Enum.TryParse(strCompression, out compression))
                 throw new FriendlyException($"Could not parse compression type: {strCompression}");
 
+            bnd.Compression = compression;
+            
             try
             {
                 bnd.Format = (Binder.Format)Enum.Parse(typeof(Binder.Format), strFormat);

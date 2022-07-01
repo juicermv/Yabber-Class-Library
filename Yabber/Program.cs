@@ -9,113 +9,113 @@ namespace Yabber
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-            if (args.Length == 0)
-            {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                Console.WriteLine(
-                    $"{assembly.GetName().Name} {assembly.GetName().Version}\n\n" +
-                    "Yabber has no GUI.\n" +
-                    "Drag and drop a file onto the exe to unpack it,\n" +
-                    "or an unpacked folder to repack it.\n\n" +
-                    "DCX files will be transparently decompressed and recompressed;\n" +
-                    "If you need to decompress or recompress an unsupported format,\n" +
-                    "use Yabber.DCX instead.\n\n" +
-                    "Press any key to exit."
-                    );
-                Console.ReadKey();
-                return;
-            }
+        //static void Main(string[] args)
+        //{
+        //    if (args.Length == 0)
+        //    {
+        //        Assembly assembly = Assembly.GetExecutingAssembly();
+        //        Console.WriteLine(
+        //            $"{assembly.GetName().Name} {assembly.GetName().Version}\n\n" +
+        //            "Yabber has no GUI.\n" +
+        //            "Drag and drop a file onto the exe to unpack it,\n" +
+        //            "or an unpacked folder to repack it.\n\n" +
+        //            "DCX files will be transparently decompressed and recompressed;\n" +
+        //            "If you need to decompress or recompress an unsupported format,\n" +
+        //            "use Yabber.DCX instead.\n\n" +
+        //            "Press any key to exit."
+        //            );
+        //        Console.ReadKey();
+        //        return;
+        //    }
 
-            bool pause = false;
+        //    bool pause = false;
 
-            foreach (string path in args)
-            {
-                try
-                {
-                    int maxProgress = Console.WindowWidth - 1;
-                    int lastProgress = 0;
-                    void report(float value)
-                    {
-                        int nextProgress = (int)Math.Ceiling(value * maxProgress);
-                        if (nextProgress > lastProgress)
-                        {
-                            for (int i = lastProgress; i < nextProgress; i++)
-                            {
-                                if (i == 0)
-                                    Console.Write('[');
-                                else if (i == maxProgress - 1)
-                                    Console.Write(']');
-                                else
-                                    Console.Write('=');
-                            }
-                            lastProgress = nextProgress;
-                        }
-                    }
-                    IProgress<float> progress = new Progress<float>(report);
+        //    foreach (string path in args)
+        //    {
+        //        try
+        //        {
+        //            int maxProgress = Console.WindowWidth - 1;
+        //            int lastProgress = 0;
+        //            void report(float value)
+        //            {
+        //                int nextProgress = (int)Math.Ceiling(value * maxProgress);
+        //                if (nextProgress > lastProgress)
+        //                {
+        //                    for (int i = lastProgress; i < nextProgress; i++)
+        //                    {
+        //                        if (i == 0)
+        //                            Console.Write('[');
+        //                        else if (i == maxProgress - 1)
+        //                            Console.Write(']');
+        //                        else
+        //                            Console.Write('=');
+        //                    }
+        //                    lastProgress = nextProgress;
+        //                }
+        //            }
+        //            IProgress<float> progress = new Progress<float>(report);
 
-                    if (Directory.Exists(path))
-                    {
-                        pause |= RepackDir(path, progress);
+        //            if (Directory.Exists(path))
+        //            {
+        //                pause |= RepackDir(path, progress);
 
-                    }
-                    else if (File.Exists(path))
-                    {
-                        pause |= UnpackFile(path, progress);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"File or directory not found: {path}");
-                        pause = true;
-                    }
+        //            }
+        //            else if (File.Exists(path))
+        //            {
+        //                pause |= UnpackFile(path, progress);
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine($"File or directory not found: {path}");
+        //                pause = true;
+        //            }
 
-                    if (lastProgress > 0)
-                    {
-                        progress.Report(1);
-                        Console.WriteLine();
-                    }
-                }
-                catch (DllNotFoundException ex) when (ex.Message.Contains("oo2core_6_win64.dll"))
-                {
-                    Console.WriteLine("In order to decompress .dcx files from Sekiro, you must copy oo2core_6_win64.dll from Sekiro into Yabber's lib folder.");
-                    pause = true;
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    using (Process current = Process.GetCurrentProcess())
-                    {
-                        var admin = new Process();
-                        admin.StartInfo = current.StartInfo;
-                        admin.StartInfo.FileName = current.MainModule.FileName;
-                        admin.StartInfo.Arguments = Environment.CommandLine.Replace($"\"{Environment.GetCommandLineArgs()[0]}\"", "");
-                        admin.StartInfo.Verb = "runas";
-                        admin.Start();
-                        return;
-                    }
-                }
-                catch (FriendlyException ex)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine($"Error: {ex.Message}");
-                    pause = true;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine($"Unhandled exception: {ex}");
-                    pause = true;
-                }
+        //            if (lastProgress > 0)
+        //            {
+        //                progress.Report(1);
+        //                Console.WriteLine();
+        //            }
+        //        }
+        //        catch (DllNotFoundException ex) when (ex.Message.Contains("oo2core_6_win64.dll"))
+        //        {
+        //            Console.WriteLine("In order to decompress .dcx files from Sekiro, you must copy oo2core_6_win64.dll from Sekiro into Yabber's lib folder.");
+        //            pause = true;
+        //        }
+        //        catch (UnauthorizedAccessException)
+        //        {
+        //            using (Process current = Process.GetCurrentProcess())
+        //            {
+        //                var admin = new Process();
+        //                admin.StartInfo = current.StartInfo;
+        //                admin.StartInfo.FileName = current.MainModule.FileName;
+        //                admin.StartInfo.Arguments = Environment.CommandLine.Replace($"\"{Environment.GetCommandLineArgs()[0]}\"", "");
+        //                admin.StartInfo.Verb = "runas";
+        //                admin.Start();
+        //                return;
+        //            }
+        //        }
+        //        catch (FriendlyException ex)
+        //        {
+        //            Console.WriteLine();
+        //            Console.WriteLine($"Error: {ex.Message}");
+        //            pause = true;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine();
+        //            Console.WriteLine($"Unhandled exception: {ex}");
+        //            pause = true;
+        //        }
 
-                Console.WriteLine();
-            }
+        //        Console.WriteLine();
+        //    }
 
-            if (pause)
-            {
-                Console.WriteLine("One or more errors were encountered and displayed above.\nPress any key to exit.");
-                Console.ReadKey();
-            }
-        }
+        //    if (pause)
+        //    {
+        //        Console.WriteLine("One or more errors were encountered and displayed above.\nPress any key to exit.");
+        //        Console.ReadKey();
+        //    }
+        //}
 
         private static bool UnpackFile(string sourceFile, IProgress<float> progress)
         {
