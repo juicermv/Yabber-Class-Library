@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Yabber
 {
-    class Program
+    public class Program
     {
         //static void Main(string[] args)
         //{
@@ -117,7 +117,7 @@ namespace Yabber
         //    }
         //}
 
-        private static bool UnpackFile(string sourceFile, IProgress<float> progress)
+        public static bool UnpackFile(string sourceFile, IProgress<float> progress)
         {
             string sourceDir = Path.GetDirectoryName(sourceFile);
             string filename = Path.GetFileName(sourceFile);
