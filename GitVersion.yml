@@ -7,9 +7,12 @@ branches:
     regex: ^master$|^main$
     label: alpha
     increment: Patch
+    is-main-branch: true
+    is-release-branch: false
+    
 
   stable:
-    mode: ContinuousDelivery
+    mode: ContinuousDeployment
     regex: ^stable$
     label: ''
     increment: Patch
