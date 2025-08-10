@@ -18,6 +18,9 @@
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
     <!-- Build configuration -->
     <ApplicationIcon>icon.ico</ApplicationIcon>
