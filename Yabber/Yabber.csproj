@@ -11,7 +11,6 @@
     <!-- Package metadata -->
     <PackageId>JuicerMV.YabberClassLibrary</PackageId>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Copyright>Copyright © Joseph Anderson 2019</Copyright>
     <PackageDescription>A .NET library version of Yabber.</PackageDescription>
     <Company>JuicerMV</Company>
     <Authors>Joseph Anderson, Nordgaren, JuicerMV</Authors>
