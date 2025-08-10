@@ -1,0 +1,68 @@
+name: Build Release & Publish to NuGet
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - stable
+
+jobs:
+    build:
+        runs-on: windows-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
+
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: '8.0.x'
+
+            - name: Restore dependencies
+              run: dotnet restore
+
+            # This will build the project as well as the NuGet package
+            - name: Build
+              run: dotnet build --configuration Release
+
+            # Upload artifact with all build contents and the NuGet package
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: build-artifacts
+                  path: 'SoulsFormats/bin/Release'
+
+    publish:
+        permissions:
+            packages: write
+
+        needs: build
+
+        runs-on: ubuntu-latest
+        steps:
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: '8.0.x'
+
+            # Download artifacts
+            - name: Download Artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: build-artifacts
+                  path: './artifacts'
+
+            - name: LS
+              run: ls -l artifacts
+
+            - name: NuGet Login
+              run: dotnet nuget add source --username ${{github.actor}} --password ${{ secrets.GITHUB_TOKEN }}  --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+
+            - name: Publish to NuGet
+              shell: bash
+              run: |
+                  NUPKG=$(ls ./artifacts/*.nupkg)
+                  echo "Found NuGet package: $NUPKG"
+                  dotnet nuget push "$NUPKG" --api-key ${{ secrets.GITHUB_TOKEN }} --source "github"

@@ -11,8 +11,8 @@ namespace Yabber
         {
 
             Directory.CreateDirectory(targetDir);
-            
-         
+
+
             var xws = new XmlWriterSettings();
             xws.Indent = true;
             string xmlpath = $"{targetDir}\\_yabber-bxf3.xml";
