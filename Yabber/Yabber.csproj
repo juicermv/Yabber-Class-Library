@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!-- Basic project configuration -->
-    <TargetFramework>net472</TargetFramework>
+    <TargetFrameworks>net472;net9.0</TargetFrameworks>
     <LangVersion>8.0</LangVersion>
     <OutputType>Library</OutputType>
     <RootNamespace>Yabber</RootNamespace>
@@ -33,10 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JuicerMV.SoulsFormats" Version="0.1.*" />
+    <PackageReference Include="JuicerMV.SoulsFormats" Version="0.1.2" />
     <PackageReference Include="GitVersion.MsBuild" Version="6.4.0">
       <PrivateAssets>All</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 </Project>
