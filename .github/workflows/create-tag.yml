@@ -1,0 +1,31 @@
+name: Tag on Merge to Stable
+permissions:
+    contents: write
+
+on:
+    push:
+        branches:
+            - stable
+
+jobs:
+    tag:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+                  token: ${{ secrets.GITHUB_TOKEN }} # Authenticate git push
+                  persist-credentials: true # Allow pushes using the token
+
+            - name: Setup GitVersion CLI
+              uses: gittools/actions/gitversion/setup@v0
+
+            - name: Calculate version
+              id: gitversion
+              uses: gittools/actions/gitversion/execute@v0
+
+            - name: Create tag
+              run: |
+                  git tag ${{ steps.gitversion.outputs.MajorMinorPatch }}  
+                  git push origin ${{ steps.gitversion.outputs.MajorMinorPatch }}

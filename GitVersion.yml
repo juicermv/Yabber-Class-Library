@@ -1,0 +1,19 @@
+workflow: GitHubFlow/v1
+# Using GitHubFlow base: master will have an 'alpha' pre-release label
+
+branches:
+  main:
+    mode: ContinuousDelivery
+    regex: ^master$|^main$
+    label: alpha
+    increment: Patch
+
+  stable:
+    mode: ContinuousDelivery
+    regex: ^stable$
+    label: ''
+    increment: Patch
+    is-release-branch: true
+
+ignore:
+  sha: []

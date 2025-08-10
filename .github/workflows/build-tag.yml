@@ -1,10 +1,10 @@
-name: Build Release & Publish to NuGet
+name: Build Tag & Publish to NuGet
 
 on:
     workflow_dispatch:
     push:
-        branches:
-            - stable
+        tags:
+            - '*'
 
 jobs:
     build:
