@@ -1,4 +1,4 @@
-name: Tag on Merge to Stable
+name: Create Tag on Merge to stable
 permissions:
     contents: write
 
