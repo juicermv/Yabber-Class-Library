@@ -93,6 +93,5 @@ jobs:
 
                   echo "Pushing to NuGet..."
                   dotnet nuget push "$NUPKG" --api-key ${{ secrets.NUGET_API_KEY }} --source "nuget.org" --skip-duplicate
-                  dotnet nuget push "$SNUPKG" --api-key ${{ secrets.NUGET_API_KEY }} --source "nuget.org" --skip-duplicate
 
                   echo "Done"
