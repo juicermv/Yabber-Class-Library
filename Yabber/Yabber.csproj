@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JuicerMV.SoulsFormats" Version="0.1.2" />
+    <PackageReference Include="JuicerMV.SoulsFormats" Version="0.1.4" />
     <PackageReference Include="GitVersion.MsBuild" Version="6.4.0">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
